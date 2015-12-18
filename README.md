@@ -1,6 +1,8 @@
 # Shampoo
 
-[![Build Status](https://travis-ci.org/wendbv/shampoo.svg)](https://travis-ci.org/wendbv/shampoo)
+[![Build Status](http://img.shields.io/travis/wendbv/shampoo.svg)](https://travis-ci.org/wendbv/shampoo)
+[![Coverage Status](http://img.shields.io/coveralls/wendbv/shampoo.svg)](https://coveralls.io/r/wendbv/shampoo)
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
 
 Shampoo is a asyncio websocket protocol implementation for [Autobahn](http://autobahn.ws/python/).
 

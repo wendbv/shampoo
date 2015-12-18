@@ -17,6 +17,6 @@ setup(
     ],
     install_requires=['schemavalidator', 'autobahn==0.10.9'],
     extras_require={
-        'test': ['pytest', 'pytest-cov', 'coverage', 'pytest-mock'],
+        'test': ['pytest', 'pytest-cov', 'coverage', 'pytest-mock', 'coveralls'],
     }
 )
