@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "push_message.json",
+    "description": "Shampoo push message specification",
+    "type": "object",
+
+    "properties": {
+        "push_data": {
+            "description": "Response data from the called method",
+            "type": "object"
+        }
+    },
+    "required": ["push_data"]
+}
