@@ -13,7 +13,7 @@ setup(
     keywords=['websocket', 'protocol'],
     classifiers=[
         'Development Status :: 4 - Beta',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
     ],
     install_requires=['schemavalidator', 'autobahn==0.10.9'],
     extras_require={

@@ -6,6 +6,8 @@ Shampoo is a asyncio websocket protocol implementation for [Autobahn](http://aut
 
 Shampoo will connect incomming websockets to user defined `endpoint` classes based on their `path`. The connecting client can make calls to the endpoint using simple `JSON` messages and the endpoint can send the client push messages.
 
+Note: Only python versions `3.5` and up are supported.
+
 ## Installation
 
 ```bash
