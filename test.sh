@@ -1,1 +1,1 @@
-py.test --cov=schemavalidator --cov-report=term-missing tests.py
+py.test --cov=shampoo --cov-report=term-missing tests.py
