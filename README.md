@@ -1,5 +1,7 @@
 # Shampoo
 
+[![Build Status](https://travis-ci.org/wendbv/shampoo.svg)](https://travis-ci.org/wendbv/shampoo)
+
 Shampoo is a asyncio websocket protocol implementation for [Autobahn](http://autobahn.ws/python/).
 
 Shampoo will connect incomming websockets to user defined `endpoint` classes based on their `path`. The connecting client can make calls to the endpoint using simple `JSON` messages and the endpoint can send the client push messages.
