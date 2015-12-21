@@ -4,7 +4,8 @@ from distutils.core import setup
 setup(
     name='shampoo',
     packages=['shampoo'],
-    version='0.1.0b4',
+    package_data={'shampoo': ['schemas/*.json']},
+    version='0.1.0b6',
     description='Shampoo is a asyncio websocket protocol implementation for Autobahn',
     author='Daan Porru (Wend)',
     author_email='daan@wend.nl',
