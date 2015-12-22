@@ -5,10 +5,14 @@
     "type": "object",
 
     "properties": {
+        "push_event": {
+            "description": "Name of the push event",
+            "type": "string"
+        },
         "push_data": {
             "description": "Response data from the called method",
             "type": "object"
         }
     },
-    "required": ["push_data"]
+    "required": ["push_event", "push_data"]
 }
