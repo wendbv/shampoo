@@ -9,10 +9,14 @@
             "type": "string",
             "pattern": "push"
         },
+        "push_event": {
+            "description": "Name of the push event",
+            "type": "string"
+        },
         "push_data": {
             "description": "Response data from the called method",
             "type": "object"
         }
     },
-    "required": ["type", "push_data"]
+    "required": ["type", "push_event", "push_data"]
 }
