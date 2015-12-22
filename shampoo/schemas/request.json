@@ -23,5 +23,5 @@
             "minimum": 0
         }
     },
-    "required": ["method", "request_data", "request_id"]
+    "required": ["type", "method", "request_data", "request_id"]
 }

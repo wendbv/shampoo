@@ -14,5 +14,5 @@
             "type": "object"
         }
     },
-    "required": ["push_data"]
+    "required": ["type", "push_data"]
 }
