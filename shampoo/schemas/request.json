@@ -5,6 +5,10 @@
     "type": "object",
 
     "properties": {
+        "type": {
+            "type": "string",
+            "pattern": "request"
+        },
         "method": {
             "description": "Method on the endpoint that has to be called.",
             "type": "string"
