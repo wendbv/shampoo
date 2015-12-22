@@ -154,11 +154,11 @@ class ShampooProtocol(WebSocketServerProtocol):
             for task in self._tasks:
                 task.cancel()
 
-    def push_message(self, data):
+    def push_message(self, event, data):
         """Push a message to the connected client."""
-        logger.debug({'push_data': data})
+        push_request = {"push_event": event, "push_data": data}
 
-        push_request = {"push_data": data}
+        logger.debug({'push_data': data})
 
         try:
             validator.validate(push_request, 'push_message.json')

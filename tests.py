@@ -423,21 +423,24 @@ def test_push_message(mocker, protocol):
     mocker.patch.object(shampoo.validator, 'validate')
     mocker.patch.object(protocol, '_send')
 
-    protocol.push_message('data')
-    protocol._send.assert_called_once_with({'push_data': 'data'})
+    protocol.push_message('event', {'data': 'data'})
+    protocol._send.assert_called_once_with(
+        {'push_event': 'event', 'push_data': {'data': 'data'}})
 
     shampoo.validator.validate.assert_called_once_with(
-        {'push_data': 'data'}, 'push_message.json')
+        {'push_event': 'event', 'push_data': {'data': 'data'}},
+        'push_message.json')
 
 
 def test_push_message_invalid_schema(mocker, protocol):
     mocker.patch.object(
         shampoo.validator, 'validate',
         side_effect=shampoo.SchemaValidationError('Invalid schema'))
-    mocker.patch.object(
-        protocol, '_send', side_effect=Exception('Should not be called'))
+    mocker.patch.object(protocol, '_send')
 
-    protocol.push_message('data')
+    protocol.push_message('event', 'data')
+
+    protocol._send.assert_not_called()
 
 
 def test_cancel_tasks(mocker, monkeypatch, protocol):
