@@ -5,6 +5,10 @@
     "type": "object",
 
     "properties": {
+        "type": {
+            "type": "string",
+            "pattern": "push"
+        },
         "push_event": {
             "description": "Name of the push event",
             "type": "string"
@@ -14,5 +18,5 @@
             "type": "object"
         }
     },
-    "required": ["push_event", "push_data"]
+    "required": ["type", "push_event", "push_data"]
 }

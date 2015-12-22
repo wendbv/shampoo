@@ -391,7 +391,7 @@ def test_get_response(mocker, protocol):
 
     response = protocol._get_response('test_method', 'data', 1)
 
-    assert response == {'response_data': {}, 'status': 201,
+    assert response == {'type': 'response', 'response_data': {}, 'status': 201,
                         'message': 'created', 'request_id': 1}
     protocol._call_endpoint.assert_called_once_with(
         'test_method', 'data')
@@ -425,10 +425,10 @@ def test_push_message(mocker, protocol):
 
     protocol.push_message('event', {'data': 'data'})
     protocol._send.assert_called_once_with(
-        {'push_event': 'event', 'push_data': {'data': 'data'}})
+        {'type': 'push', 'push_event': 'event', 'push_data': {'data': 'data'}})
 
     shampoo.validator.validate.assert_called_once_with(
-        {'push_event': 'event', 'push_data': {'data': 'data'}},
+        {'type': 'push', 'push_event': 'event', 'push_data': {'data': 'data'}},
         'push_message.json')
 
 

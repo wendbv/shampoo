@@ -5,6 +5,10 @@
     "type": "object",
 
     "properties": {
+        "type": {
+            "type": "string",
+            "pattern": "request"
+        },
         "method": {
             "description": "Method on the endpoint that has to be called.",
             "type": "string"
@@ -19,5 +23,5 @@
             "minimum": 0
         }
     },
-    "required": ["method", "request_data", "request_id"]
+    "required": ["type", "method", "request_data", "request_id"]
 }

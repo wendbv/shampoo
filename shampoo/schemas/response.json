@@ -5,6 +5,10 @@
     "type": "object",
 
     "properties": {
+        "type": {
+            "type": "string",
+            "pattern": "response"
+        },
         "status": {
             "description": "Status code, using the same codes as HTTP.",
             "type": "integer",
@@ -24,5 +28,5 @@
             "minimum": 0
         }
     },
-    "required": ["status", "message", "response_data", "request_id"]
+    "required": ["type", "status", "message", "response_data", "request_id"]
 }
