@@ -158,7 +158,7 @@ class ShampooProtocol(WebSocketServerProtocol):
         """Push a message to the connected client."""
         logger.debug({'push_data': data})
 
-        push_request = {"push_data": data}
+        push_request = {"type": "push", "push_data": data}
 
         try:
             validator.validate(push_request, 'push_message.json')
@@ -262,8 +262,9 @@ class ShampooProtocol(WebSocketServerProtocol):
         response_data, status, message =\
             self._call_endpoint(method, request_data)
 
-        response = {'response_data': response_data, 'status': status,
-                    'message': message, 'request_id': request_id}
+        response = {'type': 'response', 'response_data': response_data,
+                    'status': status, 'message': message,
+                    'request_id': request_id}
         logger.debug({'response': response})
 
         try:

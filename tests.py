@@ -391,7 +391,7 @@ def test_get_response(mocker, protocol):
 
     response = protocol._get_response('test_method', 'data', 1)
 
-    assert response == {'response_data': {}, 'status': 201,
+    assert response == {'type': 'response', 'response_data': {}, 'status': 201,
                         'message': 'created', 'request_id': 1}
     protocol._call_endpoint.assert_called_once_with(
         'test_method', 'data')
@@ -420,14 +420,11 @@ def test_send_message(mocker, ws_request):
 
 
 def test_push_message(mocker, protocol):
-    mocker.patch.object(shampoo.validator, 'validate')
     mocker.patch.object(protocol, '_send')
 
-    protocol.push_message('data')
-    protocol._send.assert_called_once_with({'push_data': 'data'})
-
-    shampoo.validator.validate.assert_called_once_with(
-        {'push_data': 'data'}, 'push_message.json')
+    protocol.push_message({'data': 'data'})
+    protocol._send.assert_called_once_with(
+        {'type': 'push', 'push_data': {'data': 'data'}})
 
 
 def test_push_message_invalid_schema(mocker, protocol):
