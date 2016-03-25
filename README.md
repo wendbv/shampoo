@@ -137,8 +137,9 @@ an example using `redis pubsub`.
 
 ```python
 import asyncio
-import asyncio_redis
+import json
 
+import asyncio_redis
 from shampoo import shampoo
 
 @shampoo.websocket_endpoint('r/notifications/?')
@@ -149,13 +150,50 @@ class NotificationEndpoint():
 
     @asyncio.coroutine
     def notifications(self):
-        self.redis = yield from asyncio_redis.Connection.create(
-            host='127.0.0.1', port=6379)
-        self.pubsub = yield from self.redis.start_subscribe()
-        yield from self.pubsub.subscribe(['notifications'])
+        self.subscription = Subscription()
+        yield from self.subscription.initialize()
         while True:
-            message = yield from self.pubsub.next_published()
-            self._protocol.push_message({'message': message.value})
+            message = yield from self.subscription.next_message()
+            self._protocol.push_message({'message': message})
+
+
+class Subscription():
+    """Listens to Redis and relay messages to all subscribers
+
+    This class sets up one connection to Redis and distributes all
+    messages to all subscribers. Without this there would be a Redis
+    connection per subscriber (websocket connection).
+    """
+    redis = None
+    subscriptions = []
+
+    @asyncio.coroutine
+    def initialize():
+        if self.redis is None:
+            self.redis = yield from asyncio_redis.Connection.create(
+                host='127.0.0.1', port=6379)
+            self.pubsub = yield from self.redis.start_subscribe()
+            yield from self.pubsub.subscribe(['notifications'])
+            asyncio.get_event_loop().create_task(
+                Subscription.activity_monitor())
+
+    @asyncio.coroutine
+    def activity_monitor()
+        while True:
+            result = yield from pubsub.next_published()
+            message = json.loads(result.value)
+
+            subscriptions = Subscription.subscriptions
+            Subscription.subscriptions = []
+
+            for subscription in subscriptions:
+                subscription.future.set_result(message)
+
+    @asyncio.coroutine
+    def next_message():
+        self.future = asyncio.Future()
+        self.subscriptions.append(self)
+        return future
 ```
 
 When you publish a message to redis with
