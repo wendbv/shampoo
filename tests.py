@@ -1,3 +1,4 @@
+import json
 import re
 
 from autobahn.websocket.http import HttpException
@@ -406,6 +407,25 @@ def test_get_response_validate(mocker, protocol):
         protocol._get_response('test_method', 'data', 1)
 
 
+def test_send_message_custom_encoder(mocker, protocol):
+    mocker.patch.object(
+        protocol, '_call_endpoint',
+        return_value=({}, 201, 'created'))
+
+    class JSONEncoder(json.JSONEncoder):
+        def encode(self, obj):
+            return '{"decoded": true}'
+
+    shampoo.json_coders['JSONEncoder'] = JSONEncoder
+
+    response = protocol._get_response('test_method', 'data', 1)
+
+    assert response == {'type': 'response', 'response_data': {'decoded': True},
+                        'status': 201, 'message': 'created', 'request_id': 1}
+
+    shampoo.json_coders['JSONEncoder'] = json.JSONEncoder
+
+
 def test_send_message(mocker, ws_request):
     sendMessage = mocker.stub()
     mocker.patch(
@@ -441,6 +461,29 @@ def test_push_message_invalid_schema(mocker, protocol):
     protocol.push_message('event', 'data')
 
     protocol._send.assert_not_called()
+
+
+def test_push_message_custom_encoder(mocker, protocol):
+    mocker.patch.object(shampoo.validator, 'validate')
+    mocker.patch.object(protocol, '_send')
+
+    class JSONEncoder(json.JSONEncoder):
+        def encode(self, obj):
+            return '{"decoded": true}'
+
+    shampoo.json_coders['JSONEncoder'] = JSONEncoder
+
+    protocol.push_message('event', {'data': 'data'})
+    protocol._send.assert_called_once_with(
+        {'type': 'push', 'push_event': 'event', 'push_data':
+         {'decoded': True}})
+
+    shampoo.validator.validate.assert_called_once_with(
+        {'type': 'push', 'push_event': 'event', 'push_data':
+         {'decoded': True}},
+        'push_message.json')
+
+    shampoo.json_coders['JSONEncoder'] = json.JSONEncoder
 
 
 def test_cancel_tasks(mocker, monkeypatch, protocol):

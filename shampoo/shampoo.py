@@ -156,6 +156,11 @@ class ShampooProtocol(WebSocketServerProtocol):
 
     def push_message(self, event, data):
         """Push a message to the connected client."""
+        # If there is a custom encoder, encode the data and decode
+        # with the default decoder, so jsonschema can handle the result.
+        if json_coders['JSONEncoder'] is not json.JSONEncoder:
+            data = json.loads(json.dumps(data, cls=json_coders['JSONEncoder']))
+
         push_request = {"type": "push", "push_event": event, "push_data": data}
 
         logger.debug(push_request)
@@ -261,6 +266,12 @@ class ShampooProtocol(WebSocketServerProtocol):
     def _get_response(self, method, request_data, request_id):
         response_data, status, message =\
             self._call_endpoint(method, request_data)
+
+        # If there is a custom encoder, encode the response and decode
+        # with the default decoder, so jsonschema can handle the result.
+        if json_coders['JSONEncoder'] is not json.JSONEncoder:
+            response_data = json.loads(
+                json.dumps(response_data, cls=json_coders['JSONEncoder']))
 
         response = {'type': 'response', 'response_data': response_data,
                     'status': status, 'message': message,
