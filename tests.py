@@ -1,7 +1,7 @@
 import json
 import re
 
-from autobahn.websocket.http import HttpException
+from autobahn.websocket.types import ConnectionDeny
 import pytest
 import txaio
 
@@ -107,7 +107,7 @@ def test_on_connect_missing_shampoo_protocol(monkeypatch, mocker, ws_request):
     monkeypatch.setattr(ws_request, 'protocols', [])
     p = shampoo.ShampooProtocol()
 
-    with pytest.raises(HttpException) as exc_info:
+    with pytest.raises(ConnectionDeny) as exc_info:
         p.onConnect(ws_request)
     assert exc_info.value.code == 400
     assert 'No matching protocol' in exc_info.value.reason
@@ -120,7 +120,7 @@ def test_on_connect_no_matching_endpoint(monkeypatch, mocker, ws_request):
         side_effect=shampoo.ShampooNoEndpointMatchError)
     p = shampoo.ShampooProtocol()
 
-    with pytest.raises(HttpException) as exc_info:
+    with pytest.raises(ConnectionDeny) as exc_info:
         p.onConnect(ws_request)
     assert exc_info.value.code == 404
     assert 'No matching endpoint found.' in exc_info.value.reason
@@ -134,7 +134,7 @@ def test_on_connect_endpoint_init_error(monkeypatch, mocker, ws_request):
             code=403, reason='Verboten'))
     p = shampoo.ShampooProtocol()
 
-    with pytest.raises(shampoo.HttpException) as exc_info:
+    with pytest.raises(shampoo.ConnectionDeny) as exc_info:
         p.onConnect(ws_request)
     assert exc_info.value.code == 403
     assert 'Verboten' in exc_info.value.reason

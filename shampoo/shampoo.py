@@ -4,7 +4,7 @@ import os
 import re
 
 from autobahn.asyncio.websocket import WebSocketServerProtocol
-from autobahn.websocket.http import HttpException
+from autobahn.websocket.types import ConnectionDeny
 from schemavalidator import SchemaValidator, SchemaValidationError
 
 
@@ -313,7 +313,7 @@ class ShampooProtocol(WebSocketServerProtocol):
             logger.warn(
                 {'peer': self._request.peer, 'path': self._request.path,
                  'message': 'Client needs to request shampoo protocol'})
-            raise HttpException(
+            raise ConnectionDeny(
                 code=400, reason='No matching protocol, shampoo protocol '
                                  'needs to be requested.')
 
@@ -325,13 +325,13 @@ class ShampooProtocol(WebSocketServerProtocol):
             logger.warn(
                 {'peer': self._request.peer, 'path': self._request.path,
                  'message': 'No matching endpoint'})
-            raise HttpException(code=404, reason='No matching endpoint found.')
+            raise ConnectionDeny(code=404, reason='No matching endpoint found.')
         except ShampooEndpointInitializationError as e:
             logger.warn(
                 {'peer': self._request.peer,
                  'message': 'Initilization of endpoint failed',
                  'error_message': str(e), 'path': self._request.path})
-            raise HttpException(code=e.code, reason=e.reason)
+            raise ConnectionDeny(code=e.code, reason=e.reason)
         except Exception as e:
             logger.error(
                 {'peer': self._request.peer,

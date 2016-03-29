@@ -31,7 +31,7 @@ import txaio
 if __name__ == '__main__':
     txaio.use_asyncio()
 
-    factory = WebSocketServerFactory('ws://localhost:9007', debug=False)
+    factory = WebSocketServerFactory('ws://localhost:9007')
     factory.protocol = ShampooProtocol
 
     loop = asyncio.get_event_loop()
