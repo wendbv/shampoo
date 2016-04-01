@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "id": "request.json",
+    "id": "/request.json",
     "description": "Shampoo request specification",
     "type": "object",
 
