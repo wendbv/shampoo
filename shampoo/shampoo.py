@@ -325,7 +325,8 @@ class ShampooProtocol(WebSocketServerProtocol):
             logger.warn(
                 {'peer': self._request.peer, 'path': self._request.path,
                  'message': 'No matching endpoint'})
-            raise ConnectionDeny(code=404, reason='No matching endpoint found.')
+            raise ConnectionDeny(
+                code=404, reason='No matching endpoint found.')
         except ShampooEndpointInitializationError as e:
             logger.warn(
                 {'peer': self._request.peer,
