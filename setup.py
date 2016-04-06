@@ -5,7 +5,7 @@ setup(
     name='shampoo',
     packages=['shampoo'],
     package_data={'shampoo': ['schemas/*.json']},
-    version='0.1.0b9',
+    version='0.1.0b10',
     description='Shampoo is a asyncio websocket protocol implementation for Autobahn',
     author='Daan Porru (Wend)',
     author_email='daan@wend.nl',
