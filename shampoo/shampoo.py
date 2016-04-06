@@ -341,6 +341,9 @@ class ShampooProtocol(WebSocketServerProtocol):
                 exc_info=e)
             raise e
 
+        # Return the selected protocol. This is always shampoo.
+        return 'shampoo'
+
     def onOpen(self):
         """Connection is established.
 
