@@ -1,3 +1,4 @@
+import time
 import json
 import logging
 import os
@@ -148,7 +149,7 @@ class ShampooProtocol(WebSocketServerProtocol):
     def cancel_tasks(self):
         """Cancel all registered tasks for this connection"""
         logger.info({
-            'messages': 'Cancelling tasks', 'peer': self._request.peer,
+            'message': 'Cancelling tasks', 'peer': self._request.peer,
             'path': self._request.path, 'tasks': self._tasks})
         if self._tasks:
             for task in self._tasks:
@@ -163,7 +164,7 @@ class ShampooProtocol(WebSocketServerProtocol):
 
         push_request = {"type": "push", "push_event": event, "push_data": data}
 
-        logger.debug(push_request)
+        logger.debug('Push request: {}'.format(push_request))
 
         try:
             validator.validate(push_request, 'push_message.json')
@@ -224,6 +225,7 @@ class ShampooProtocol(WebSocketServerProtocol):
         Calls the requested method with the request data and
         returns a tuple with response_data, status and message.
         """
+        t1 = time.time()
         logger.info({
             'peer': self._request.peer, 'method': method,
             'message': 'Calling endpoint method',
@@ -254,6 +256,11 @@ class ShampooProtocol(WebSocketServerProtocol):
             else:
                 response_data = response
                 status, message = 200, 'ok'
+            t2 = time.time()
+            tdiff = t2-t1
+            logger.info({
+                'peer': self._request.peer, 'request_time': tdiff,
+                'message': 'Request took: {}s'.format(round(tdiff, 2))})
             return response_data, status, message
         except Exception as e:
             message = 'Uncaught exception during method call'
@@ -296,8 +303,7 @@ class ShampooProtocol(WebSocketServerProtocol):
         """
         logger.info({'message': 'Sending payload', 'isBinary': isBinary,
                      'peer': self._request.peer,
-                     'path': self._request.path})
-        logger.debug({'payload': payload})
+                     'path': self._request.path, 'payload': payload})
 
         super().sendMessage(payload, isBinary, **kwargs)
 
@@ -361,8 +367,8 @@ class ShampooProtocol(WebSocketServerProtocol):
         """
         logger.info({
             'message': 'Payload received', 'isBinary': isBinary,
-            'peer': self._request.peer, 'path': self._request.path})
-        logger.debug({'payload': payload})
+            'peer': self._request.peer, 'path': self._request.path,
+            'payload': payload})
 
         try:
             method, request_data, request_id = self._get_call_data(
