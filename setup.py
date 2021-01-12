@@ -16,7 +16,7 @@ setup(
         'Development Status :: 4 - Beta',
         'Programming Language :: Python :: 3.5',
     ],
-    install_requires=['schemavalidator==0.1.0b11', 'autobahn==0.14.1'],
+    install_requires=['schemavalidator', 'autobahn'],
     extras_require={
         'test': ['pytest', 'pytest-cov', 'coverage', 'pytest-mock', 'coveralls'],
     }
