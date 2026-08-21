@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "shampoo"
-version = "0.1.0b15"
+version = "0.1.0b16"
 description = "Shampoo is a asyncio websocket protocol implementation for Autobahn"
 readme = "README.md"
 license = "MIT"
@@ -28,6 +28,13 @@ Homepage = "https://github.com/wendbv/shampoo"
 
 [tool.hatch.build.targets.wheel]
 packages = ["shampoo"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "shampoo",
+    "tests",
+    "test.sh",
+]
 
 [dependency-groups]
 dev = [

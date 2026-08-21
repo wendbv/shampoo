@@ -705,7 +705,7 @@ sdist = { url = "https://files.pythonhosted.org/packages/03/f8/2edfedd4b9124a758
 
 [[package]]
 name = "shampoo"
-version = "0.1.0b15"
+version = "0.1.0b16"
 source = { editable = "." }
 dependencies = [
     { name = "autobahn" },
