@@ -194,6 +194,12 @@ def test_on_close_cleanup_error(mocker, protocol):
     protocol.onClose(True, 101, 'test')
 
 
+def test_on_close_before_handshake():
+    protocol = shampoo.ShampooProtocol()
+
+    protocol.onClose(False, 1006, 'connection was closed uncleanly')
+
+
 def test_on_open(protocol):
     protocol.onOpen()
 
@@ -498,3 +504,9 @@ def test_cancel_tasks(mocker, monkeypatch, protocol):
     protocol.cancel_tasks()
 
     task.cancel.assert_called_once_with()
+
+
+def test_cancel_tasks_before_handshake():
+    protocol = shampoo.ShampooProtocol()
+
+    protocol.cancel_tasks()
