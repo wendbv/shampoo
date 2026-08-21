@@ -1,14 +1,13 @@
 # Shampoo
 
-[![Build Status](http://img.shields.io/travis/wendbv/shampoo.svg)](https://travis-ci.org/wendbv/shampoo)
-[![Coverage Status](http://img.shields.io/coveralls/wendbv/shampoo.svg)](https://coveralls.io/r/wendbv/shampoo)
+[![Build Status](https://github.com/wendbv/shampoo/actions/workflows/main.yml/badge.svg)](https://github.com/wendbv/shampoo/actions/workflows/main.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
 
 Shampoo is a asyncio websocket protocol implementation for [Autobahn](http://autobahn.ws/python/).
 
 Shampoo will connect incomming websockets to user defined `endpoint` classes based on their `path`. The connecting client can make calls to the endpoint using simple `JSON` messages and the endpoint can send the client push messages.
 
-Note: Only python versions `3.5` and up are supported.
+Note: Only python versions `3.13` and up are supported.
 
 ## Installation
 
