@@ -149,8 +149,9 @@ class ShampooProtocol(WebSocketServerProtocol):
     def cancel_tasks(self):
         """Cancel all registered tasks for this connection"""
         logger.info({
-            'message': 'Cancelling tasks', 'peer': self._request.peer,
-            'path': self._request.path, 'tasks': self._tasks})
+            'message': 'Cancelling tasks', 'peer': self.peer,
+            'path': self._request.path if self._request else None,
+            'tasks': self._tasks})
         if self._tasks:
             for task in self._tasks:
                 task.cancel()
@@ -393,7 +394,8 @@ class ShampooProtocol(WebSocketServerProtocol):
         logger.info({
             'action': 'onClose', 'wasClean': wasClean,
             'message': 'Connection closed', 'reason': reason,
-            'peer': self._request.peer, 'path': self._request.path})
+            'peer': self.peer,
+            'path': self._request.path if self._request else None})
 
         self.cancel_tasks()
 
