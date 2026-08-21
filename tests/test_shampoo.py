@@ -140,6 +140,18 @@ def test_on_connect_endpoint_init_error(monkeypatch, mocker, ws_request):
     assert 'Verboten' in exc_info.value.reason
 
 
+def test_on_connect_endpoint_exception(monkeypatch, mocker, ws_request):
+    monkeypatch.setattr(shampoo, 'WebSocketServerProtocol', object)
+    error = Exception('Endpoint blew up')
+    mocker.patch(
+        'shampoo.shampoo.get_endpoint_instance', side_effect=error)
+    p = shampoo.ShampooProtocol()
+
+    with pytest.raises(Exception) as exc_info:
+        p.onConnect(ws_request)
+    assert exc_info.value is error
+
+
 def test_on_message_success(mocker, protocol):
     call_data = ('method', 'request_data', 'request_id')
     mocker.patch.object(protocol, '_get_call_data', return_value=call_data)
