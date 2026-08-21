@@ -1,5 +1,7 @@
 .cache/
 .coverage
+.pytest_cache/
+.venv/
 MANIFEST
 __pycache__/
 build/

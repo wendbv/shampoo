@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "shampoo"
+version = "0.1.0b15"
+description = "Shampoo is a asyncio websocket protocol implementation for Autobahn"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENCE"]
+requires-python = ">=3.13"
+authors = [
+    { name = "Daan Porru (Wend)", email = "daan@wend.nl" },
+]
+keywords = ["websocket", "protocol"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "autobahn",
+    "schemavalidator",
+]
+
+[project.urls]
+Homepage = "https://github.com/wendbv/shampoo"
+
+[tool.hatch.build.targets.wheel]
+packages = ["shampoo"]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+]
